@@ -1,0 +1,212 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:transparent}
+  .wrap{padding:2rem 1rem;font-family:var(--font-sans)}
+  .hero{background:#1a0a00;border-radius:var(--border-radius-lg);overflow:hidden;position:relative;padding:2.5rem 2rem 2rem;color:#fff}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%, rgba(216,90,48,0.35) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%, rgba(83,74,183,0.2) 0%,transparent 60%)}
+  .tag{display:inline-block;background:rgba(216,90,48,0.85);color:#fff;font-size:11px;font-weight:500;letter-spacing:1.5px;padding:3px 10px;border-radius:100px;text-transform:uppercase;margin-bottom:1rem}
+  .title{font-size:clamp(52px,12vw,96px);font-family:'Bebas Neue','Arial Black',sans-serif;line-height:0.9;letter-spacing:2px;color:#fff;position:relative;z-index:1}
+  .title span{color:#D85A30}
+  .subtitle{font-size:13px;color:rgba(255,255,255,0.55);margin-top:0.75rem;letter-spacing:0.5px;position:relative;z-index:1}
+  .meta-row{display:flex;gap:1.5rem;margin-top:1.5rem;flex-wrap:wrap;position:relative;z-index:1}
+  .meta-item{display:flex;flex-direction:column;gap:2px}
+  .meta-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+  .meta-value{font-size:14px;font-weight:500;color:#fff}
+  .stars-row{display:flex;gap:4px;margin-top:1rem;position:relative;z-index:1}
+  .star-pill{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.15);border-radius:100px;padding:4px 12px;font-size:12px;color:rgba(255,255,255,0.8)}
+
+  .ticket-section{margin-top:1.5rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:stretch}
+  .ticket{background:#fff;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;display:flex;flex-direction:column}
+  .ticket-header{background:#1a0a00;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+  .ticket-header .t-movie{color:#D85A30;font-family:'Bebas Neue','Arial Black',sans-serif;font-size:22px;letter-spacing:1px}
+  .ticket-header .t-type{color:rgba(255,255,255,0.5);font-size:11px}
+  .ticket-body{padding:1rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:0.6rem}
+  .t-row{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:0.5rem;border-bottom:0.5px dashed var(--color-border-tertiary)}
+  .t-row:last-of-type{border-bottom:none}
+  .t-key{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.8px}
+  .t-val{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+  .ticket-tear{display:flex;align-items:center;gap:0;margin:0 -0.5px}
+  .ticket-tear .circle{width:18px;height:18px;border-radius:50%;background:var(--color-background-tertiary);flex-shrink:0}
+  .ticket-tear .dash{flex:1;border-top:1.5px dashed var(--color-border-tertiary)}
+  .ticket-stub{padding:0.75rem 1.25rem;text-align:center}
+  .stub-code{font-family:var(--font-mono);font-size:20px;font-weight:500;letter-spacing:6px;color:var(--color-text-primary)}
+  .stub-hint{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+
+  .qr-block{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;min-width:120px}
+  .qr-title{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.8px;text-align:center}
+  canvas#qr{border-radius:4px}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;margin-top:1rem}
+  .info-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}
+  .info-card .ic-icon{color:#D85A30;font-size:20px;margin-bottom:6px}
+  .info-card .ic-label{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.8px}
+  .info-card .ic-val{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-top:2px}
+
+  .synopsis{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-top:0.75rem}
+  .synopsis p{font-size:14px;color:var(--color-text-secondary);line-height:1.7}
+  .synopsis strong{color:var(--color-text-primary);font-weight:500}
+
+  .cta-row{display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap}
+  .btn-primary{background:#D85A30;color:#fff;border:none;border-radius:var(--border-radius-md);padding:10px 22px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--font-sans)}
+  .btn-primary:hover{background:#993C1D}
+  .btn-secondary{background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 22px;font-size:14px;cursor:pointer;font-family:var(--font-sans)}
+  .btn-secondary:hover{background:var(--color-background-secondary)}
+  .rating-pill{display:inline-flex;align-items:center;gap:4px;background:#FAC775;color:#633806;font-size:12px;font-weight:500;padding:4px 10px;border-radius:100px}
+</style>
+
+<h2 class="sr-only">Athiradi movie showcase — Malayalam action comedy released May 14 2026, starring Tovino Thomas and Basil Joseph</h2>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="tag">🎬 Now in Theatres</div>
+    <div class="title">ATHI<span>RADI</span></div>
+    <div class="subtitle">Malayalam · Action Comedy · U/A · 2026 · Directed by Arun Anirudhan</div>
+    <div class="stars-row">
+      <span class="star-pill">Tovino Thomas</span>
+      <span class="star-pill">Basil Joseph</span>
+      <span class="star-pill">Vineeth Sreenivasan</span>
+      <span class="star-pill">Riya Shibu</span>
+    </div>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Released</span>
+        <span class="meta-value">14 May 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Box Office</span>
+        <span class="meta-value">₹34+ Cr WW</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Critic Rating</span>
+        <span class="meta-value">4/5 ⭐</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticket-section">
+    <div class="ticket">
+      <div class="ticket-header">
+        <div>
+          <div class="t-movie">ATHIRADI</div>
+          <div class="t-type">Movie Ticket · Tomorrow's Show</div>
+        </div>
+        <span class="rating-pill">4 / 5</span>
+      </div>
+      <div class="ticket-body">
+        <div class="t-row">
+          <span class="t-key">Date</span>
+          <span class="t-val" id="show-date">—</span>
+        </div>
+        <div class="t-row">
+          <span class="t-key">Show</span>
+          <span class="t-val">Evening Show · 6:30 PM</span>
+        </div>
+        <div class="t-row">
+          <span class="t-key">Seat</span>
+          <span class="t-val">G7 · G8</span>
+        </div>
+        <div class="t-row">
+          <span class="t-key">Language</span>
+          <span class="t-val">Malayalam</span>
+        </div>
+        <div class="t-row">
+          <span class="t-key">Format</span>
+          <span class="t-val">2D · Dolby Audio</span>
+        </div>
+      </div>
+      <div class="ticket-tear">
+        <div class="circle"></div>
+        <div class="dash"></div>
+        <div class="circle"></div>
+      </div>
+      <div class="ticket-stub">
+        <div class="stub-code">ATH·2026</div>
+        <div class="stub-hint">Keep this for entry</div>
+      </div>
+    </div>
+
+    <div class="qr-block">
+      <div class="qr-title">Scan</div>
+      <canvas id="qr" width="100" height="100"></canvas>
+      <div class="stub-hint" style="font-size:9px;text-align:center">ticket QR</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <i class="ti ti-user ic-icon" aria-hidden="true"></i>
+      <div class="ic-label">Director</div>
+      <div class="ic-val">Arun Anirudhan</div>
+    </div>
+    <div class="info-card">
+      <i class="ti ti-music ic-icon" aria-hidden="true"></i>
+      <div class="ic-label">Music</div>
+      <div class="ic-val">Shaan Rahman</div>
+    </div>
+    <div class="info-card">
+      <i class="ti ti-building ic-icon" aria-hidden="true"></i>
+      <div class="ic-label">Production</div>
+      <div class="ic-val">Basil Joseph Ent.</div>
+    </div>
+    <div class="info-card">
+      <i class="ti ti-device-tv ic-icon" aria-hidden="true"></i>
+      <div class="ic-label">OTT</div>
+      <div class="ic-val">SonyLIV</div>
+    </div>
+  </div>
+
+  <div class="synopsis">
+    <p><strong>Story:</strong> Samkutty, an energetic and overzealous civil engineering student, revives a college festival that's been banned for years — setting off a fierce rivalry that turns celebration into glorious chaos. A colourful, laughter-filled ride about youth, friendship, dreams, and second chances.</p>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn-primary" onclick="sendPrompt('Suggest some Malayalam movies similar to Athiradi that I might enjoy ↗')">
+      <i class="ti ti-sparkles" aria-hidden="true"></i> Similar movies ↗
+    </button>
+    <button class="btn-secondary" onclick="sendPrompt('Tell me more about Athiradi — cast details, review summary, and what to expect ↗')">
+      Full details ↗
+    </button>
+  </div>
+
+</div>
+
+<script>
+const d = new Date();
+d.setDate(d.getDate() + 1);
+const opts = {weekday:'long',day:'numeric',month:'long',year:'numeric'};
+document.getElementById('show-date').textContent = d.toLocaleDateString('en-IN', opts);
+
+const c = document.getElementById('qr');
+const ctx = c.getContext('2d');
+const size = 100;
+const mod = 21;
+const cell = Math.floor(size / mod);
+const offset = Math.floor((size - mod * cell) / 2);
+
+const pattern = [];
+for(let r=0;r<mod;r++){
+  pattern[r]=[];
+  for(let col=0;col<mod;col++){
+    let v=0;
+    if(r<7&&col<7||(r<7&&col>=mod-7)||(r>=mod-7&&col<7)){v=1;}
+    else if(r>=2&&r<=4&&col>=2&&col<=4||(r>=2&&r<=4&&col>=mod-5&&col<=mod-3)||(r>=mod-5&&r<=mod-3&&col>=2&&col<=4)){v=1;}
+    else{v=Math.random()>0.5?1:0;}
+    if(r===6||col===6||r===mod-8){v=r%2===0?1:0;}
+    pattern[r][col]=v;
+  }
+}
+const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+ctx.fillStyle = isDark ? '#1a1a1a' : '#ffffff';
+ctx.fillRect(0,0,size,size);
+ctx.fillStyle = isDark ? '#f5f5f5' : '#1a0a00';
+for(let r=0;r<mod;r++){
+  for(let col=0;col<mod;col++){
+    if(pattern[r][col]){
+      ctx.fillRect(offset+col*cell, offset+r*cell, cell, cell);
+    }
+  }
+}
+</script>
